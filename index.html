@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>LankaFM</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#000;--s1:#1c1c1e;--s2:#2c2c2e;--tx:#fff;--mut:#98989f;--red:#fa2d48;--sep:#ffffff1a;
+--f:-apple-system,BlinkMacSystemFont,"Inter","Noto Sans Sinhala",Roboto,system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html{height:100%}
+body{height:100%;background:#050505;color:var(--tx);font:400 15px/1.35 var(--f);display:grid;place-items:center}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+svg{width:24px;height:24px;fill:currentColor;display:block}
+.phone{width:100%;height:100%;max-width:420px;max-height:880px;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;position:relative}
+@media(min-width:480px) and (min-height:700px){.phone{height:min(100%,860px);border-radius:40px;border:6px solid #1b1b1d;box-shadow:0 30px 80px #000a}}
+#screen{flex:1;overflow-y:auto;padding:0 20px 24px;scrollbar-width:none}
+#screen::-webkit-scrollbar{display:none}
+.lt{font:700 33px/1.1 var(--f);letter-spacing:-.6px;padding:18px 0 14px;display:flex;align-items:center;justify-content:space-between}
+.lt small{font-size:13px;font-weight:500;color:var(--mut);letter-spacing:0}
+h2{font:700 21px var(--f);letter-spacing:-.3px;margin:26px 0 12px;display:flex;justify-content:space-between;align-items:baseline}
+h2 button{font-size:15px;font-weight:400;color:var(--red)}
+.art{position:relative;background:linear-gradient(150deg,var(--c1),var(--c2));display:grid;place-items:center;overflow:hidden;color:#ffffffee;font:700 28px var(--f);flex:none}
+.art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:14%;background:#fff}
+.hero{display:block;width:100%;border-radius:14px;background:var(--s1);overflow:hidden}
+.hero .art{width:100%;aspect-ratio:1/.8;font-size:64px}
+.hero .t{padding:14px 16px 16px}
+.hero small{color:var(--mut);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.hero b{display:block;font:600 21px var(--f);margin-top:2px}
+.hero p{color:var(--mut)}
+.pbtn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:var(--red);padding:9px 20px 9px 14px;border-radius:20px;font-weight:600}
+.pbtn svg{width:18px;height:18px}
+.hs{display:flex;gap:14px;overflow-x:auto;margin:0 -20px;padding:0 20px;scrollbar-width:none}
+.hs::-webkit-scrollbar{display:none}
+.card{flex:none;width:148px}
+.card .art{width:148px;height:148px;border-radius:10px;font-size:34px}
+.card b{display:block;font-weight:500;margin-top:8px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card span{display:block;color:var(--mut);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row{display:flex;align-items:center;gap:14px;width:100%;padding:8px 0;border-bottom:.5px solid var(--sep)}
+.row .art{width:54px;height:54px;border-radius:8px;font-size:15px}
+.row div{flex:1;min-width:0}
+.row b{display:block;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row span.s{color:var(--mut);font-size:13px}
+.row.cur b{color:var(--red)}
+.mq{display:flex;align-items:flex-end;gap:2px;height:14px;width:16px;flex:none}
+.mq i{flex:1;height:100%;background:var(--red);border-radius:1px;transform-origin:bottom;transform:scaleY(.25)}
+.playing .mq i{animation:bar .7s ease-in-out infinite alternate}
+.mq i:nth-child(2){animation-delay:-.3s!important}.mq i:nth-child(3){animation-delay:-.55s!important}
+@keyframes bar{from{transform:scaleY(.2)}to{transform:scaleY(1)}}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{height:96px;border-radius:12px;padding:12px;font:700 19px var(--f);display:flex;align-items:flex-end;background:linear-gradient(135deg,var(--c1),var(--c2))}
+.tile small{display:block;font:500 12px var(--f);opacity:.85}
+.back{color:var(--red);font-size:17px;padding:10px 0 0;display:block}
+.search{display:flex;align-items:center;gap:8px;background:var(--s2);border-radius:12px;padding:0 10px;height:40px;margin-bottom:8px}
+.search svg{width:18px;height:18px;color:var(--mut)}
+.search input{flex:1;background:none;border:0;outline:0;color:var(--tx);font:inherit}
+.empty{text-align:center;color:var(--mut);padding:48px 16px}
+.empty b{display:block;color:var(--tx);font-size:19px;margin-bottom:6px}
+.add{display:flex;align-items:center;gap:10px;color:var(--red);padding:14px 0;font-weight:500}
+.note{color:var(--mut);font-size:12px;margin-top:22px;text-align:center}
+/* bottom */
+#mini{padding:0 8px}
+.mini{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 8px;border-radius:14px;background:#262628ee;backdrop-filter:blur(20px);margin-bottom:6px;box-shadow:0 2px 14px #0008}
+.mini .art{width:42px;height:42px;border-radius:7px;font-size:12px}
+.mini .mt{flex:1;min-width:0;display:flex;align-items:center;gap:12px}
+.mini b{display:block;font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini span.s{color:var(--mut);font-size:12px}
+.mini .ib{width:40px;height:40px}
+.ib{display:grid;place-items:center;width:44px;height:44px;border-radius:50%}
+.ib:active{opacity:.5}
+nav{display:flex;background:#161618f0;backdrop-filter:blur(24px);border-top:.5px solid var(--sep);padding:8px 4px 10px}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font:500 10.5px var(--f);color:var(--mut)}
+nav button.on{color:var(--red)}
+nav svg{width:26px;height:26px}
+/* now playing */
+#np{position:absolute;inset:0;z-index:20;transform:translateY(102%);transition:transform .42s cubic-bezier(.32,.72,0,1);background:linear-gradient(180deg,color-mix(in srgb,var(--c1) 55%,#000) 0,#000 90%);display:flex;flex-direction:column;padding:10px 28px 28px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+#np.open{transform:none}
+.grab{display:flex;justify-content:center;padding:6px 0 14px}
+.grab i{width:38px;height:5px;border-radius:3px;background:#ffffff66}
+.np-art{flex:1;display:grid;place-items:center;min-height:0}
+.np-art .art{width:min(100%,340px);aspect-ratio:1;border-radius:14px;font-size:84px;box-shadow:0 24px 50px #0009;transform:scale(.82);transition:transform .55s cubic-bezier(.3,1.4,.5,1)}
+.on-air .np-art .art{transform:scale(1)}
+.np-t{display:flex;align-items:center;gap:8px;margin-top:22px}
+.np-t div{flex:1;min-width:0}
+.np-t b{display:block;font:600 22px var(--f);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np-t span{color:#ffffffa6;font-size:18px}
+.np-t .ib.on{color:var(--red)}
+.bar{height:6px;border-radius:3px;background:#ffffff33;margin:22px 0 6px;overflow:hidden}
+.bar i{display:block;height:100%;width:100%;background:#fffc;border-radius:3px}
+.buf .bar i{width:30%;animation:slide 1.1s ease-in-out infinite alternate}
+@keyframes slide{to{transform:translateX(233%)}}
+.bl{display:flex;justify-content:space-between;color:#ffffffa6;font-size:12px}
+.tc{display:flex;align-items:center;justify-content:center;gap:40px;margin:14px 0}
+.tc svg{width:38px;height:38px}.tc .big svg{width:60px;height:60px}
+.vol{display:flex;align-items:center;gap:10px;color:#ffffffa6}
+.vol svg{width:18px;height:18px}.vol input{flex:1;accent-color:#fff}
+#form-wrap{position:absolute;inset:0;z-index:30;background:#000a;display:none;align-items:flex-end}
+#form-wrap.show{display:flex}
+.sheet{width:100%;background:var(--s1);border-radius:16px 16px 0 0;padding:20px;display:flex;flex-direction:column;gap:12px}
+.sheet h3{font:600 19px var(--f)}
+.sheet label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mut)}
+.sheet input,.sheet select{background:var(--s2);border:0;border-radius:10px;padding:12px;color:var(--tx);font:inherit;outline:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acts{display:flex;justify-content:flex-end;gap:8px}
+.btn{padding:11px 20px;border-radius:20px;font-weight:600;color:var(--red)}.btn.f{background:var(--red);color:#fff}
+#snack{position:absolute;left:16px;right:16px;top:calc(12px + env(safe-area-inset-top,0px));background:#3a3a3cf0;backdrop-filter:blur(16px);padding:12px 16px;border-radius:14px;font-size:14px;opacity:0;transform:translateY(-14px);pointer-events:none;transition:.25s;z-index:40}
+#snack.show{opacity:1;transform:none}
+button:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.playing .mq i,.buf .bar i{animation:none}}
+</style>
+</head>
+<body>
+<div class="phone" id="app">
+  <main id="screen"></main>
+  <div id="mini"></div>
+  <nav id="nav"></nav>
+  <section id="np" aria-label="Now playing"></section>
+  <div id="form-wrap" data-act="closeform">
+    <form class="sheet" id="form" autocomplete="off">
+      <h3>Add station</h3>
+      <label>Name<input id="cName" required placeholder="Rhythm FM"></label>
+      <div class="two"><label>Frequency (MHz)<input id="cFreq" type="number" step="0.1" min="88" max="108" value="95.6"></label>
+      <label>Language<select id="cLang"><option>Sinhala</option><option>English</option><option>Tamil</option><option>Other</option></select></label></div>
+      <label>Stream URL (MP3 or AAC)<input id="cUrl" type="url" required placeholder="https://stream.example.com/live.mp3"></label>
+      <div class="acts"><button type="button" class="btn" data-act="closeform">Cancel</button><button type="submit" class="btn f">Add and play</button></div>
+    </form>
+  </div>
+  <div id="snack" role="status"></div>
+</div>
+<script>
+const P={play:'M8 5v14l11-7z',pause:'M6 19h4V5H6v14zm8-14v14h4V5h-4z',next:'M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z',prev:'M6 6h2v12H6zm3.5 6l8.5 6V6z',
+listen:'M12 2a10 10 0 100 20 10 10 0 000-20zm-2 14.5v-9l7 4.5-7 4.5z',browse:'M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z',lib:'M12 3v10.55A4 4 0 1014 17V7h4V3h-6z',
+search:'M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z',
+heart:'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z',
+heartO:'M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z',
+down:'M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z',add:'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z',vol:'M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z'};
+const ic=k=>`<svg viewBox="0 0 24 24"><path d="${P[k]}"/></svg>`;
+const B=[['ran-fm','Ran FM','Sinhala','https://stream.zeno.fm/ranfm-srilanka'],['shree-fm','Shree FM','Sinhala','https://stream.zeno.fm/shreefm-srilanka'],
+['hiru-fm','Hiru FM','Sinhala','https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden'],['neth-fm','Neth FM','Sinhala','https://cp11.serverse.com/proxy/nethfm/stream'],
+['fm-derana','FM Derana','Sinhala','https://cp12.serverse.com/proxy/fmderana/stream'],['siyatha-fm','Siyatha FM','Sinhala','https://srv01.onlineradio.voaplus.com/siyathafm'],
+['lakhanda','Lakhanda','Sinhala','https://cp12.serverse.com/proxy/itnlakhanda/stream'],['city-fm','City FM','Sinhala','https://stream.zeno.fm/slbc-cityfm'],
+['gold-fm','Gold FM','English','https://radio.lotustechnologieslk.net:2020/stream/goldfmgarden'],['kiss-fm','Kiss FM','English','https://srv01.onlineradio.voaplus.com/kissfm'],
+['sun-fm','Sun FM','English','https://radio.lotustechnologieslk.net:2020/stream/sunfmgarden'],['sooriyan-fm','Sooriyan FM','Tamil','https://radio.lotustechnologieslk.net:2020/stream/sooriyanfmgarden']
+].map(([id,n,l,u])=>({id,n,l,u,img:'',sub:l+' radio'}));
+const ls=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+let custom=ls('lfm_custom')||[],dir=ls('lfm_api')||null,live=!!dir;
+let S=[];const build=()=>{S=[...(dir&&dir.length?dir:B),...custom]};build();
+const st={tab:'listen',sub:null,np:false,cur:S[0].id,playing:false,buf:false,fav:new Set(ls('lfm_fav')||[]),rec:ls('lfm_rec')||[],vol:80,q:''};
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const get=id=>S.find(x=>x.id===id)||S[0];
+const col=s=>{let h=0;for(const c of s.id)h=(h*31+c.charCodeAt(0))%360;return[`hsl(${h} 68% 56%)`,`hsl(${(h+45)%360} 62% 34%)`]};
+const grad=s=>{const c=col(s);return`--c1:${c[0]};--c2:${c[1]}`};
+const ini=s=>esc(s.n.replace(/fm|radio/ig,'').trim().slice(0,2).toUpperCase()||'FM');
+const art=(s,cls='')=>`<div class="art ${cls}" style="${grad(s)}">${ini(s)}${s.img?`<img src="${esc(s.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}</div>`;
+const mq='<div class="mq"><i></i><i></i><i></i></div>';
+const card=s=>`<button class="card" data-act="tune" data-id="${esc(s.id)}">${art(s)}<b>${esc(s.n)}</b><span>${esc(s.sub)}</span></button>`;
+const row=s=>`<button class="row ${s.id===st.cur?'cur':''}" data-act="tune" data-id="${esc(s.id)}">${art(s)}<div><b>${esc(s.n)}</b><span class="s">${esc(s.sub)}</span></div>${s.id===st.cur&&st.playing?mq:''}</button>`;
+const byL=l=>S.filter(x=>x.l===l);
+const LANGS=['Sinhala','English','Tamil','Other'];
+const TILE=[['Sinhala','#ff6b6b','#c2255c'],['English','#4dabf7','#3b5bdb'],['Tamil','#fcc419','#e8590c'],['Other','#69db7c','#087f5b']];
+const V={
+listen(){const f=S[0],top=S.slice(0,10),rec=st.rec.map(get).slice(0,10);
+ return`<div class="lt">Listen Now<small>${live?'Live directory':'Offline list'}</small></div>
+ <button class="hero" data-act="tune" data-id="${esc(f.id)}">${art(f)}<div class="t"><small>Featured station</small><b>${esc(f.n)}</b><p>${esc(f.sub)}</p><span class="pbtn">${ic('play')}Play</span></div></button>
+ ${rec.length?`<h2>Recently Played</h2><div class="hs">${rec.map(card).join('')}</div>`:''}
+ <h2>Top Stations</h2><div class="hs">${top.map(card).join('')}</div>
+ ${LANGS.filter(l=>byL(l).length).map(l=>`<h2>${l}<button data-act="sub" data-l="${l}">See All</button></h2><div class="hs">${byL(l).slice(0,10).map(card).join('')}</div>`).join('')}`},
+browse(){if(st.sub){const l=byL(st.sub);return`<button class="back" data-act="sub" data-l="">‹ Browse</button><div class="lt">${st.sub}</div>${l.map(row).join('')||'<div class="empty"><b>No stations</b>Nothing here yet.</div>'}`}
+ return`<div class="lt">Browse</div><div class="tiles">${TILE.map(([l,a,b])=>`<button class="tile" style="--c1:${a};--c2:${b}" data-act="sub" data-l="${l}"><div>${l}<small>${byL(l).length} stations</small></div></button>`).join('')}</div>`},
+lib(){const fav=S.filter(x=>st.fav.has(x.id)),rec=st.rec.map(get);
+ return`<div class="lt">Library</div>
+ <h2 style="margin-top:6px">Favorites</h2>${fav.length?fav.map(row).join(''):'<div class="empty"><b>No favorites yet</b>Tap the heart in Now Playing to add stations.</div>'}
+ ${rec.length?`<h2>Recently Played</h2>${rec.slice(0,8).map(row).join('')}`:''}
+ <h2>My Stations</h2>${custom.map(row).join('')}
+ <button class="add" data-act="addform">${ic('add')}Add station by URL</button>
+ ${custom.length?'<button class="add" data-act="clear" style="color:var(--mut)">Remove my stations</button>':''}
+ <p class="note">${live?`Live directory, ${S.length-custom.length} stations`:'Offline list. The live directory loads when online.'}</p>`},
+search(){return`<div class="lt">Search</div><label class="search">${ic('search')}<input id="q" placeholder="Stations, languages, frequency" value="${esc(st.q)}"></label><div id="res">${res()}</div>`}};
+function res(){const q=st.q.trim().toLowerCase();if(!q)return S.slice(0,30).map(row).join('');
+ const l=S.filter(x=>x.n.toLowerCase().includes(q)||x.l.toLowerCase().startsWith(q)||x.sub.toLowerCase().includes(q));
+ return l.length?l.map(row).join(''):`<div class="empty"><b>No results</b>Try a different name or language.</div>`}
+function npHTML(){const s=get(st.cur),f=st.fav.has(s.id);return`<div class="grab" data-act="npclose"><i></i></div>
+<div class="np-art">${art(s)}</div>
+<div class="np-t"><div><b>${esc(s.n)}</b><span>${esc(s.sub)}</span></div><button class="ib ${f?'on':''}" data-act="fav" aria-label="Favorite">${ic(f?'heart':'heartO')}</button></div>
+<div class="bar"><i></i></div><div class="bl"><span>${st.buf?'Connecting':st.playing?'Live':'Paused'}</span><span>Radio</span></div>
+<div class="tc"><button class="ib" data-act="prev" aria-label="Previous">${ic('prev')}</button><button class="ib big" data-act="play" aria-label="${st.playing?'Pause':'Play'}">${ic(st.playing?'pause':'play')}</button><button class="ib" data-act="next" aria-label="Next">${ic('next')}</button></div>
+<div class="vol">${ic('vol')}<input type="range" min="0" max="100" value="${st.vol}" data-act="vol" aria-label="Volume">${ic('vol')}</div>`}
+function render(){
+ const s=get(st.cur),a=$('#app');a.classList.toggle('playing',st.playing&&!st.buf);a.classList.toggle('on-air',st.playing);a.classList.toggle('buf',st.buf);
+ const sc=$('#screen'),keep=sc.scrollTop,tabChanged=sc.dataset.t!==st.tab+st.sub;sc.innerHTML=V[st.tab]();sc.dataset.t=st.tab+st.sub;sc.scrollTop=tabChanged?0:keep;
+ $('#mini').innerHTML=`<div class="mini" style="${grad(s)}"><button class="mt" data-act="npopen">${art(s)}<span style="flex:1;min-width:0"><b>${esc(s.n)}</b><span class="s">${st.buf?'Connecting…':st.playing?'Live':'Paused'}</span></span></button><button class="ib" data-act="play" aria-label="${st.playing?'Pause':'Play'}">${ic(st.playing?'pause':'play')}</button><button class="ib" data-act="next" aria-label="Next">${ic('next')}</button></div>`;
+ $('#nav').innerHTML=[['listen','Listen Now','listen'],['browse','Browse','browse'],['lib','Library','lib'],['search','Search','search']].map(([k,l,i])=>`<button class="${st.tab===k?'on':''}" data-act="tab" data-t="${k}">${ic(i)}${l}</button>`).join('');
+ const np=$('#np');np.style.cssText=grad(s);np.classList.toggle('open',st.np);np.innerHTML=npHTML();
+}
+let tm;const snack=m=>{const e=$('#snack');e.textContent=m;e.classList.add('show');clearTimeout(tm);tm=setTimeout(()=>e.classList.remove('show'),2600)};
+/* audio */
+const au=new Audio();au.preload='none';au.volume=st.vol/100;
+function play(){const s=get(st.cur);if(au.dataset.id!==s.id){au.src=s.u;au.dataset.id=s.id}
+ st.playing=true;st.buf=true;st.rec=[s.id,...st.rec.filter(x=>x!==s.id)].slice(0,12);ls('lfm_rec',st.rec);render();
+ au.play().catch(e=>{if(e&&e.name!=='AbortError')fail()})}
+function stop(){au.pause();au.removeAttribute('src');au.load();delete au.dataset.id;st.playing=false;st.buf=false;render()}
+function fail(){const n=get(st.cur).n;au.removeAttribute('src');delete au.dataset.id;st.playing=false;st.buf=false;snack('Cannot play '+n+'. Try another station.');render()}
+au.addEventListener('playing',()=>{st.buf=false;render()});
+au.addEventListener('error',()=>{if(au.getAttribute('src'))fail()});
+const step=d=>{const i=S.findIndex(x=>x.id===st.cur);st.cur=S[(i+d+S.length)%S.length].id;play()};
+/* live directory (Radio Browser) */
+const lang=x=>{const t=((x.language||'')+' '+(x.tags||'')).toLowerCase();return t.includes('sinh')?'Sinhala':t.includes('tamil')?'Tamil':t.includes('english')?'English':'Other'};
+async function loadDir(){
+ for(const h of ['de1','de2','nl1','at1']){
+  try{const r=await fetch(`https://${h}.api.radio-browser.info/json/stations/bycountrycodeexact/LK?hidebroken=true&order=clickcount&reverse=true&limit=150`);
+   if(!r.ok)continue;const a=await r.json(),seen=new Set(),out=[];
+   for(const x of a){const u=x.url_resolved||x.url;if(!u||x.lastcheckok!==1)continue;const k=x.name.trim().toLowerCase();if(seen.has(k))continue;seen.add(k);
+    out.push({id:x.stationuuid,n:x.name.trim(),l:lang(x),u,img:(x.favicon||'').startsWith('https')?x.favicon:'',sub:[x.codec,x.bitrate?x.bitrate+' kbps':''].filter(Boolean).join(' ')||lang(x)+' radio'})}
+   if(out.length>3){const was=st.cur,wasS=get(was);dir=out;live=true;ls('lfm_api',out);build();if(!S.some(x=>x.id===was)&&!st.playing)st.cur=S[0].id;else if(!S.some(x=>x.id===was))S.unshift(wasS);render();return}
+  }catch(e){}}
+}
+/* events */
+const sheet=o=>$('#form-wrap').classList.toggle('show',o);
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-act]');if(!b)return;if(b.id==='form-wrap'&&e.target!==b)return;
+ const a=b.dataset.act;
+ if(a==='tune'){st.cur=b.dataset.id;play();return}
+ if(a==='play'){st.playing?stop():play();return}
+ if(a==='next'){step(1);return}if(a==='prev'){step(-1);return}
+ if(a==='tab'){st.tab=b.dataset.t;st.sub=null}
+ else if(a==='sub'){st.tab='browse';st.sub=b.dataset.l||null}
+ else if(a==='npopen')st.np=true;else if(a==='npclose')st.np=false;
+ else if(a==='fav'){const id=st.cur;st.fav.has(id)?(st.fav.delete(id),snack('Removed from Library')):(st.fav.add(id),snack('Added to Library'));ls('lfm_fav',[...st.fav])}
+ else if(a==='addform'){sheet(true);return}else if(a==='closeform'){sheet(false);return}
+ else if(a==='clear'){const was=st.cur;custom=[];ls('lfm_custom',custom);build();if(!S.some(x=>x.id===was)){stop();st.cur=S[0].id}}
+ else return;
+ render();
+});
+document.addEventListener('input',e=>{const t=e.target;
+ if(t.dataset.act==='vol'){st.vol=+t.value;au.volume=st.vol/100}
+ else if(t.id==='q'){st.q=t.value;$('#res').innerHTML=res()}});
+$('#form').addEventListener('submit',e=>{e.preventDefault();
+ const f=parseFloat($('#cFreq').value),x={id:'c-'+Date.now(),n:$('#cName').value.trim(),l:$('#cLang').value,u:$('#cUrl').value.trim(),img:'',sub:$('#cLang').value+(f?' radio, '+f.toFixed(1)+' MHz':' radio')};
+ if(!x.n||!x.u)return;custom.push(x);ls('lfm_custom',custom);build();e.target.reset();sheet(false);st.cur=x.id;st.tab='lib';play()});
+render();loadDir();
+</script>
+</body>
+</html>
