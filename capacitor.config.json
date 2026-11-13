@@ -1,0 +1,8 @@
+{
+  "appId": "lk.lankafm.neo",
+  "appName": "LankaFM 2026 Neo",
+  "webDir": "www",
+  "backgroundColor": "#0D0E13",
+  "server": { "androidScheme": "https" },
+  "android": { "allowMixedContent": true }
+}
